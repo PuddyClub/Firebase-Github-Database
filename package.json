@@ -1,0 +1,22 @@
+{
+  "name": "firebase-github-database",
+  "version": "1.0.0",
+  "description": "Firebase Database to Github Webhooks.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TinyPudding/Firebase-Github-Database.git"
+  },
+  "keywords": [
+    "github"
+  ],
+  "author": "Yasmin Seidel (JasminDreasond)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TinyPudding/Firebase-Github-Database/issues"
+  },
+  "homepage": "https://github.com/TinyPudding/Firebase-Github-Database#readme"
+}
