@@ -191,7 +191,7 @@ async function handler(req, res, data) {
                 // Custom Module Config
                 let custom_modules = [];
                 if (Array.isArray(data.modules)) {
-                    custom_modules = _.defaultsDeep({}, data.modules, []);
+                    custom_modules = data.modules;
                 }
 
                 // Exist
