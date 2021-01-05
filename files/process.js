@@ -188,6 +188,12 @@ async function handler(req, res, data) {
                     await db.child('repositories').child(firebase.databaseEscape(old_version_name, true)).remove();
                 }
 
+                // Custom Module Config
+                let custom_modules = [];
+                if (Array.isArray(data.modules)) {
+                    custom_modules = _.defaultsDeep({}, data.modules, []);
+                }
+
                 // Exist
                 if (!req.body.deleted) {
 
