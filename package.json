@@ -18,5 +18,14 @@
   "bugs": {
     "url": "https://github.com/TinyPudding/Firebase-Github-Database/issues"
   },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "firebase-webhook-express-default": "git+https://github.com/TinyPudding/Firebase-Webhook-Express-Default.git",
+    "helmet": "^4.3.1",
+    "lodash": "^4.17.20",
+    "moment-timezone": "^0.5.32",
+    "puddy-lib": "git+https://github.com/TinyPudding/Puddy-Lib.git"
+  },
   "homepage": "https://github.com/TinyPudding/Firebase-Github-Database#readme"
 }
