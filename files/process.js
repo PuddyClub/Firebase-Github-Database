@@ -163,8 +163,11 @@ async function handler(req, res, data) {
         // Complete
         else {
 
+            // Events DB
+            const events_db = db.child('events').child(firebase.databaseEscape(event));
+
             // Send Event
-            await db.child('events').child(firebase.databaseEscape(event)).set({
+            await events_db.set({
                 sig: sig,
                 id: id,
                 payload: req.body,
@@ -179,8 +182,12 @@ async function handler(req, res, data) {
                     firebase.databaseEscape(req.body.repository.full_name, true)
                 );
 
+                // Get Repository Items
+                const repository_db_data = repository_db.child('data');
+                const repository_db_event = repository_db.child('events').child(firebase.databaseEscape(event));
+
                 // Get OLD Repository
-                let old_version_name = await firebase.getDBAsync(repository_db.child('data').child('full_name'));
+                let old_version_name = await firebase.getDBAsync(repository_db_data.child('full_name'));
                 old_version_name = firebase.getDBValue(old_version_name);
 
                 // Remove OLD Name
@@ -190,6 +197,23 @@ async function handler(req, res, data) {
 
                 // Custom Module Config
                 let custom_modules = [];
+                const custom_module_manager = require('puddy-lib/libs/custom_module_loader');
+                const custom_module_options = {
+                    
+                    // Database
+                    db: {
+                        repository: {
+                            data: repository_db_data,
+                            event: repository_db_event
+                        },
+                        event: events_db
+                    },
+
+                    // Data
+                    data: req.body,
+                    repository: req.body.repository
+
+                };
                 if (Array.isArray(data.modules)) {
                     custom_modules = data.modules;
                 }
@@ -198,7 +222,7 @@ async function handler(req, res, data) {
                 if (!req.body.deleted) {
 
                     // Post Repository Data
-                    await repository_db.child('data').set(req.body.repository);
+                    await repository_db_data.set(req.body.repository);
 
                     // Prepare Event
                     const event_push = {
@@ -243,7 +267,11 @@ async function handler(req, res, data) {
                     }
 
                     // Post Event
-                    await repository_db.child('events').child(firebase.databaseEscape(event)).set(event_push);
+                    await repository_db_event.set(event_push);
+                    custom_module_options.event = event_push;
+                    
+                    // Send to Custom Modules
+                    await custom_module_manager.run(custom_modules, custom_module_options, 'add');
 
                 }
 
@@ -252,6 +280,7 @@ async function handler(req, res, data) {
 
                     // Remove Repository
                     await repository_db.remove();
+                    await custom_module_manager.run(custom_modules, custom_module_options, 'remove');
 
                 }
 
