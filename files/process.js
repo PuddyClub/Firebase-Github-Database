@@ -57,7 +57,7 @@ function checkType(options) {
 async function handler(req, res, data) {
 
     // Prepare HTTP Page
-    const http_page = require('puddy-lib/http/HTTP-1.0');
+    const http_page = require('@tinypudding/puddy-lib/http/HTTP-1.0');
     let error_made = false;
 
     try {
@@ -79,7 +79,7 @@ async function handler(req, res, data) {
         let events;
 
         // Start Firebase
-        const firebase = require('puddy-lib/firebase');
+        const firebase = require('@tinypudding/puddy-lib/firebase');
         firebase.start(require('firebase-admin'), tinyCfg.options, tinyCfg.firebase);
 
         // App
@@ -197,7 +197,7 @@ async function handler(req, res, data) {
 
                 // Custom Module Config
                 let custom_modules = [];
-                const custom_module_manager = require('puddy-lib/libs/custom_module_loader');
+                const custom_module_manager = require('@tinypudding/puddy-lib/libs/custom_module_loader');
                 const custom_module_options = {
                     
                     // Database
@@ -237,7 +237,7 @@ async function handler(req, res, data) {
                     };
 
                     // Get File Type
-                    const objType = require('puddy-lib/get/objType');
+                    const objType = require('@tinypudding/puddy-lib/get/objType');
 
                     // Get More Info
                     for (const item in req.body) {
