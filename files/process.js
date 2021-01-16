@@ -56,6 +56,9 @@ function checkType(options) {
 // Handler
 async function handler(req, res, data) {
 
+    // Logger
+    const logger = require('@tinypudding/puddy-lib/firebase/logger');
+
     // Prepare HTTP Page
     const http_page = require('@tinypudding/puddy-lib/http/HTTP-1.0');
     let error_made = false;
@@ -113,7 +116,7 @@ async function handler(req, res, data) {
         async function hasError(msg) {
 
             // Show Error
-            console.error(msg);
+            logger.error(new Error(msg));
             await db.child('error').set({
                 message: msg
             });
@@ -199,7 +202,7 @@ async function handler(req, res, data) {
                 let custom_modules = [];
                 const custom_module_manager = require('@tinypudding/puddy-lib/libs/custom_module_loader');
                 const custom_module_options = {
-                    
+
                     // Database
                     db: {
                         repository: {
@@ -269,7 +272,7 @@ async function handler(req, res, data) {
                     // Post Event
                     await repository_db_event.set(event_push);
                     custom_module_options.event = event_push;
-                    
+
                     // Send to Custom Modules
                     await custom_module_manager.run(custom_modules, custom_module_options, 'add');
 
@@ -296,8 +299,7 @@ async function handler(req, res, data) {
     } catch (err) {
 
         // HTTP Page
-        console.error(err);
-        console.error(err.message);
+        logger.error(err);
         if (!error_made) {
             return http_page.send(res, 500);
         }
