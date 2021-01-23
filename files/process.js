@@ -57,7 +57,7 @@ function checkType(options) {
 async function handler(req, res, data) {
 
     // Logger
-    const logger = require('@tinypudding/puddy-lib/firebase/logger');
+    const logger = require('@tinypudding/firebase-lib/logger');
 
     // Prepare HTTP Page
     const http_page = require('@tinypudding/puddy-lib/http/HTTP-1.0');
@@ -82,7 +82,7 @@ async function handler(req, res, data) {
         let events;
 
         // Start Firebase
-        const firebase = require('@tinypudding/puddy-lib/firebase');
+        const firebase = require('@tinypudding/firebase-lib');
         firebase.start(require('firebase-admin'), tinyCfg.options, tinyCfg.firebase);
 
         // App
