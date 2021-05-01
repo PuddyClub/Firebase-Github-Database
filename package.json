@@ -1,6 +1,6 @@
 {
   "name": "@tinypudding/firebase-github-database",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Firebase Database to Github Webhooks.",
   "main": "index.js",
   "scripts": {
