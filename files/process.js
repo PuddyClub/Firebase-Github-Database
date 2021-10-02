@@ -116,7 +116,7 @@ async function handler(req, res, data) {
         async function hasError(msg) {
 
             // Show Error
-            logger.error(new Error(msg));
+            await logger.error(new Error(msg));
             await db.child('error').set({
                 message: msg
             });
@@ -135,6 +135,15 @@ async function handler(req, res, data) {
         const sig = req.headers['x-hub-signature'];
         const event = req.headers['x-github-event'];
         const id = req.headers['x-github-delivery'];
+
+        // Log
+        await logger.log({
+            sig: sig,
+            event: event,
+            id: id,
+            body: req.body,
+            protocol: req.protocol
+        });
 
         // Error List
         if (!sig) {
@@ -299,7 +308,7 @@ async function handler(req, res, data) {
     } catch (err) {
 
         // HTTP Page
-        logger.error(err);
+        await logger.error(err);
         if (!error_made) {
             return http_page.send(res, 500);
         }
