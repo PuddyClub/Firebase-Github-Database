@@ -142,7 +142,8 @@ async function handler(req, res, data) {
             event: event,
             id: id,
             body: req.body,
-            protocol: req.protocol
+            protocol: req.protocol,
+            options: options
         });
 
         // Error List
