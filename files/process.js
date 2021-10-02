@@ -160,7 +160,7 @@ async function handler(req, res, data) {
         // Verify
         if (!verify(sig, req.rawBody)) {
             const err = await hasError('X-Hub-Signature does not match blob signature');
-            reject(err);
+            return err;
         }
 
         // Complete
